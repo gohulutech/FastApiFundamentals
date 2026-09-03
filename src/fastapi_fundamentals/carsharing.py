@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 from contextlib import asynccontextmanager
 from fastapi_fundamentals.db import engine
-from fastapi_fundamentals.routers import cars, web
+from fastapi_fundamentals.routers import cars, web, auth
 
 
 @asynccontextmanager
@@ -17,6 +17,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Car Sharing", lifespan=lifespan)
 app.include_router(cars.router)
 app.include_router(web.router)
+app.include_router(auth.router)
 
 origins = ["http://localhost:8000", "http://localhost:8080"]
 

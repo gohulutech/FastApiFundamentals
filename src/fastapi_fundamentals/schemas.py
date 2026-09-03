@@ -24,7 +24,7 @@ class User(SQLModel, table=True):
         return pwd_context.verify(password, self.password_hash)
 
 
-class UserOurput(SQLModel):
+class UserOutput(SQLModel):
     id: int
     username: str
 

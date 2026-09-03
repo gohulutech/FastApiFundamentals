@@ -1,31 +1,28 @@
-"""
-create_user.py
--------------
-A convenience script to create a user.
-"""
+"""Interactive CLI to create a user in the carsharing database."""
 
 import logging
 from getpass import getpass
 
-from sqlmodel import SQLModel, Session, create_engine
+from sqlmodel import Session, SQLModel, create_engine
 
 from fastapi_fundamentals.schemas import User
 
 logging.getLogger("passlib").setLevel(logging.ERROR)
 
-engine = create_engine(
-    "sqlite:///carsharing.db",
-    connect_args={"check_same_thread": False},  # Needed for SQLite
-    echo=True,  # Log generated SQL
-)
+DB_URL = "sqlite:///carsharing.db"
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Prompt for a username/password and persist a new user."""
+    engine = create_engine(
+        DB_URL,
+        connect_args={"check_same_thread": False},
+        echo=True,
+    )
+
     print("Creating tables (if necessary)")
     SQLModel.metadata.create_all(engine)
-
     print("--------")
-
     print("This script will create a user and save it in the database.")
 
     username = input("Please enter username\n")
@@ -36,3 +33,5 @@ if __name__ == "__main__":
         user.set_password(pwd)
         session.add(user)
         session.commit()
+
+    print("User created.")

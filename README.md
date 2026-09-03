@@ -62,11 +62,35 @@ curl -X POST http://localhost:8000/api/cars/ \
 
 ```
 src/fastapi_fundamentals/
-├── __init__.py
-├── carsharing.py   # FastAPI app, routes, and DB engine
-└── schemas.py      # SQLModel models (Car, Trip) and input/output schemas
+├── __init__.py         # main() entry point (runs uvicorn)
+├── carsharing.py       # FastAPI app wiring, middleware, exception handlers
+├── db.py               # SQLite engine and session dependency
+├── schemas.py          # SQLModel models and input/output schemas
+├── create_user.py      # create-user CLI script
+├── routers/
+│   ├── cars.py         # /api/cars endpoints
+│   ├── auth.py         # /auth token endpoints
+│   └── web.py          # HTML pages (home, search)
+└── templates/          # Jinja2 HTML templates
+tests/
+├── conftest.py         # shared fixtures (in-memory DB, TestClient)
+├── test_cars.py
+├── test_auth.py
+└── test_schemas.py
 ```
 
 ## Database
 
 The app uses a local SQLite database file (`carsharing.db`) that is created automatically on startup. It's gitignored, so it won't be committed to version control.
+
+## Creating a user
+
+```bash
+uv run create-user
+```
+
+## Running the tests
+
+```bash
+uv run pytest
+```

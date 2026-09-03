@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Annotated
 from fastapi import APIRouter, Request, Form, Depends, Cookie
 from fastapi.responses import HTMLResponse
@@ -8,7 +9,7 @@ from fastapi_fundamentals.routers.cars import get_cars
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=Path(__file__).parent.parent / "templates")
 
 
 @router.get("/", response_class=HTMLResponse)

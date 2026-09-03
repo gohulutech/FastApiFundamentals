@@ -1,8 +1,32 @@
-import json
 from datetime import datetime
-from pathlib import Path
+from passlib.context import CryptContext
+from sqlmodel import VARCHAR, Column, Relationship, SQLModel, Field
 
-from sqlmodel import Relationship, SQLModel, Field
+pwd_context = CryptContext(schemes=["bcrypt"])
+
+
+class UserInput(SQLModel):
+    username: str | None = None
+    password: str | None = ""
+
+
+class User(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    username: str = Field(
+        sa_column=Column("username", VARCHAR, unique=True, index=True)
+    )
+    password_hash: str = ""
+
+    def set_password(self, password):
+        self.password_hash = pwd_context.hash(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
+
+
+class UserOurput(SQLModel):
+    id: int
+    username: str
 
 
 class TripInput(SQLModel):

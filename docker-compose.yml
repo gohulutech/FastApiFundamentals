@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fastapi-fundamentals
+    container_name: fastapi-fundamentals
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

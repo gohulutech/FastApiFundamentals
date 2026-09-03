@@ -1,0 +1,22 @@
+# Version control
+.git
+.gitignore
+
+# Local environment & tooling
+.venv
+.omo
+.pytest_cache
+
+# Python cache & build artifacts
+__pycache__
+*.py[oc]
+*.egg-info
+build
+dist
+wheels
+
+# Local data (regenerated on startup, must not be baked into the image)
+*.db
+
+# Tests (not needed inside the image)
+tests

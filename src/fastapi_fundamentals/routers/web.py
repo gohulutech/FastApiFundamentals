@@ -1,8 +1,7 @@
 from typing import Annotated
-from fastapi import APIRouter, Request, Form, Depends
+from fastapi import APIRouter, Request, Form, Depends, Cookie
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-
 from sqlmodel import Session
 from fastapi_fundamentals.db import get_session
 from fastapi_fundamentals.routers.cars import get_cars
@@ -13,7 +12,8 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/", response_class=HTMLResponse)
-def home(request: Request):
+def home(request: Request, cars_cookie: Annotated[str | None, Cookie()]):
+    print(cars_cookie)
     return templates.TemplateResponse(request=request, name="home.html")
 
 

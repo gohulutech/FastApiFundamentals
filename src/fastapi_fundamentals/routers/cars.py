@@ -64,6 +64,7 @@ def update_car(
         car.size = new_data.size
         car.transmission = new_data.transmission
         session.commit()
+        session.refresh(car)
         return car
     raise HTTPException(status_code=404, detail=f"No car with id={id}.")
 
